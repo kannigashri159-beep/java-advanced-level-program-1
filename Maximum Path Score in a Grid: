@@ -1,0 +1,46 @@
+15 . Maximum Path Score in a Grid:
+                    if (dp[i][j][c] == -1)
+                        continue;
+
+                    // Move right
+                    if (j + 1 < n) {
+                        int nc = c + (grid[i][j + 1] == 0 ? 0 : 1);
+
+                        if (nc <= k)
+                            dp[i][j + 1][nc] =
+                                Math.max(dp[i][j + 1][nc],
+                                         dp[i][j][c] + grid[i][j + 1]);
+                    }
+
+                    // Move down
+                    if (i + 1 < m) {
+                        int nc = c + (grid[i + 1][j] == 0 ? 0 : 1);
+
+                        if (nc <= k)
+                            dp[i + 1][j][nc] =
+                                Math.max(dp[i + 1][j][nc],
+                                         dp[i][j][c] + grid[i + 1][j]);
+                    }
+                }
+            }
+        }
+
+        int ans = -1;
+
+        for (int c = 0; c <= k; c++)
+            ans = Math.max(ans, dp[m - 1][n - 1][c]);
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        int[][] grid = {
+            {0, 1},
+            {2, 0}
+        };
+
+        int k = 1;
+
+        System.out.println(maxScore(grid, k));
+    }
+}
